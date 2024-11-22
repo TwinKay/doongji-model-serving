@@ -1,11 +1,21 @@
 import os
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Vue 개발 서버 주소
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 saved_model_path = os.path.join(current_dir, "mobilenetv2")
 
